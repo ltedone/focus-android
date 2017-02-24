@@ -8,6 +8,8 @@ package org.mozilla.focus.web;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Build;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.webkit.CookieManager;
@@ -60,6 +62,34 @@ public class WebViewProvider {
         // Disable access to arbitrary local files by webpages - assets can still be loaded
         // via file:///android_asset/res, so at least error page images won't be blocked.
         settings.setAllowFileAccess(false);
+
+        settings.setUserAgentString(buildUserAgentString(settings));
+    }
+
+    private static String buildUserAgentString(final WebSettings settings) {
+        final StringBuilder uaBuilder = new StringBuilder();
+        uaBuilder.append("Mozilla/5.0");
+
+        // TODO: firefox mobile inserts Mobile here, but every other browser inserts mobile
+        // later in the string (this version just keeps whatever the webview supplies, i.e. mobile
+        // later on in the string).
+        // TODO: do we really want the "wv" portion here? We are using WebView, but we are also our own browser.
+        uaBuilder.append(" (Android ").append(Build.VERSION.RELEASE).append("; wv").append(") ");
+
+        // Use the default WebView agent string here (but replace Chrome with Focus)
+        final String existing = settings.getUserAgentString();
+        int start = existing.indexOf("AppleWebKit");
+        final String[] tokens = existing.substring(start).split(" ");
+        for (int i = 0; i < tokens.length; i++) {
+            if (tokens[i].startsWith("Chrome")) {
+                tokens[i] = "Focus/1.0";
+            }
+        }
+
+        uaBuilder.append(TextUtils.join(" ", tokens));
+
+        final String out = uaBuilder.toString();
+        return out;
     }
 
     private static class WebkitView extends NestedWebView implements IWebView {
