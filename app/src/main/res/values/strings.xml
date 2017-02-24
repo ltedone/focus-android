@@ -45,4 +45,10 @@
     <string name="preference_category_mozilla">Mozilla</string>
     <string name="preference_mozilla_telemetry">Send anonymous usage data</string>
     <string name="preference_mozilla_telemetry_summary">Learn more</string>
+
+    <string name="errorpage_refresh">Refresh</string>
+
+    <string name="error_host_lookup">Unable to find hostname for:</string>
+    <string name="error_timeout">The connection timed out:</string>
+
 </resources>

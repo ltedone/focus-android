@@ -8,6 +8,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.annotation.WorkerThread;
+import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
@@ -15,6 +16,13 @@ import android.webkit.WebViewClient;
 
 import org.mozilla.focus.R;
 import org.mozilla.focus.webkit.matcher.UrlMatcher;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.io.StringWriter;
 
 public class TrackingProtectionWebViewClient extends WebViewClient {
 
@@ -104,4 +112,23 @@ public class TrackingProtectionWebViewClient extends WebViewClient {
         return super.shouldOverrideUrlLoading(view, url);
     }
 
+    @Override
+    public void onReceivedError(final WebView webView, int errorCode,
+                                final String description, String failingUrl) {
+
+        // This is a hack: onReceivedError(WebView, WebResourceRequest, WebResourceError) is API 23+ only,
+        // - the WebResourceRequest would let us know if the error affects the main frame or not. As a workaround
+        // we just check whether the failing URL is the current URL, which is enough to detect an error
+        // in the main frame.
+
+        // The API 23+ version also return a *slightly* more usable description, via WebResourceError.getError();
+        // e.g.. "There was a network error.", whereas this version provides things like "net::ERR_NAME_NOT_RESOLVED"
+        if (failingUrl.equals(currentPageURL) &&
+                ErrorPage.supportsErrorCode(errorCode)) {
+            ErrorPage.loadErrorPage(webView, currentPageURL, errorCode);
+            return;
+        }
+
+        super.onReceivedError(webView, errorCode, description, failingUrl);
+    }
 }
