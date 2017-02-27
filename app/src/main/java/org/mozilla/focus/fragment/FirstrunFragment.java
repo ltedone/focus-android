@@ -27,7 +27,8 @@ public class FirstrunFragment extends Fragment implements View.OnClickListener {
     }
 
     public static boolean shouldShowFirstrun(final Context context) {
-        return !PreferenceManager.getDefaultSharedPreferences(context).getBoolean(FIRSTRUN_PREF, false);
+        return false;
+//        return !PreferenceManager.getDefaultSharedPreferences(context).getBoolean(FIRSTRUN_PREF, false);
     }
 
     Button okButton;
