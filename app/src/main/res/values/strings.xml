@@ -72,4 +72,8 @@
 
     <!-- Content description (not visible, for screen readers etc.): "Three dot" menu button. -->
     <string name="content_description_menu">More options</string>
+
+    <string name="firstrun_title">Browse like no one’s watching.</string>
+    <string name="firstrun_description">Automatically block online trackers while you browse. Then tap to erase visited pages, searches, cookies and passwords from your device.</string>
+    <string name="firstrun_button">OK, GOT IT!</string>
 </resources>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@drawable/firstrun_background">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/wordmark"
+        android:paddingBottom="30dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:text="@string/firstrun_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/firstrun_title"
+        android:gravity="center"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"/>
+
+    <TextView
+        android:paddingTop="20dp"
+        android:paddingBottom="40dp"
+        android:text="@string/firstrun_description"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/firstrun_description"
+        android:textAlignment="center"/>
+
+    <Button
+        android:text="@string/firstrun_button"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/firstrun_exitbutton"
+        android:gravity="center"
+        android:textSize="12sp"/>
+
+</LinearLayout>
