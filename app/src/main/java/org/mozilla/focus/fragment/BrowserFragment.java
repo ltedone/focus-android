@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,6 +22,7 @@ import android.widget.TextView;
 
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.SettingsActivity;
+import org.mozilla.focus.utils.IntentUtils;
 import org.mozilla.focus.web.IWebView;
 
 /**
@@ -110,6 +110,15 @@ public class BrowserFragment extends Fragment implements View.OnClickListener, P
             @Override
             public void onProgress(int progress) {
                 progressView.setProgress(progress);
+            }
+
+            @Override
+            public void handleExternalUrl(final String url) {
+                    final String fallback = IntentUtils.handleExternalUri(getActivity(), url);
+
+                    if (fallback != null) {
+                        webView.loadUrl(fallback);
+                    }
             }
         });
 
